@@ -8,7 +8,7 @@ env_variables:
   SPRING_PROFILES_ACTIVE: "cloud-gcp"
 
 handlers:
-  - url: /.*
+  url: /.*
   script: this field is required, but ignored
   secure: always
 manual_scaling:

@@ -17,12 +17,11 @@ public class FirebaseInitialization {
     @PostConstruct
     public void initialization() {
         InputStream serviceAccount = this.getClass().getClassLoader().getResourceAsStream("./serviceAccountKey.json");
-        //new FileInputStream("/Users/300073795/Documents/Learnings/moneyshare/serviceAccountKey.json");
         FirebaseOptions options = null;
         try {
             options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://moneyshare-f6da9.firebaseio.com/")
+                    .setDatabaseUrl("https://moneyshare-f6562-default-rtdb.firebaseio.com")
                     .build();
         } catch (IOException e) {
             e.printStackTrace();

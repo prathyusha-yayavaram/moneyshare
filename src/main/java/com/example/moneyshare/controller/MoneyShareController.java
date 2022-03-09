@@ -17,9 +17,19 @@ public class MoneyShareController {
     @Autowired
     private UserService userService;
 
+    @GetMapping(path = "/isNewUser")
+    public Boolean isNewUser(@RequestParam String id) throws ExecutionException, InterruptedException {
+        return userService.isNewUser(id);
+    }
+
     @PostMapping(path = "/saveUser", consumes = "application/json", produces = "application/json")
     public String saveUserDetails(@RequestBody User user) throws ExecutionException, InterruptedException {
         return userService.saveUserDetails(user);
+    }
+
+    @GetMapping(path = "/healthCheck")
+    public String checkHealth(@RequestBody User user) {
+        return "OK\n";
     }
   /*  private Boolean flag = true;
     @PostMapping(path = "/putUserData", consumes = "application/json", produces = "application/json")
