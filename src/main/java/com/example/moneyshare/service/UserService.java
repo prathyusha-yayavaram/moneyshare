@@ -30,6 +30,6 @@ public class UserService {
 
     public Boolean isNewUser(String id) {
         Optional<User> user = userRepository.get(id);
-        return user.isEmpty();
+        return user.isPresent();
     }
 }
