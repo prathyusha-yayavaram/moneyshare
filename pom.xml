@@ -12,6 +12,7 @@
 	<artifactId>moneyshare</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>moneyshare</name>
+	<packaging>jar</packaging>
 	<description>Borrow and Lend application</description>
 	<properties>
 		<java.version>11</java.version>
@@ -73,6 +74,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>1.3.1</version>
+				<configuration>
+					<stage.enableJarSplitting>true</stage.enableJarSplitting>
+					<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
+					<cloudSdkPath>/Users/300073795/Documents/Environment/google-cloud-sdk</cloudSdkPath>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

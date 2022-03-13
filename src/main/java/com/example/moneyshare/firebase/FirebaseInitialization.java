@@ -16,7 +16,8 @@ public class FirebaseInitialization {
 
     @PostConstruct
     public void initialization() throws IOException {
-        InputStream serviceAccount = FirebaseInitialization.class.getResource("/serviceAccountKey.json").openStream();
+        //InputStream serviceAccount = FirebaseInitialization.class.getResource("/serviceAccountKey.json").openStream();
+        InputStream serviceAccount = new FileInputStream("/home/kandirsathvik/moneyshare/src/main/resources/serviceAccountKey.json");
         FirebaseOptions options = null;
         try {
             options = new FirebaseOptions.Builder()

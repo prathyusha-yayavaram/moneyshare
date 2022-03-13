@@ -2,10 +2,7 @@ runtime: java
 env: flex
 
 runtime_config:
-  jdk: openjdk11
-
-env_variables:
-  SPRING_PROFILES_ACTIVE: "cloud-gcp"
+  jdk: openjdk9
 
 handlers:
   - url: /.*
