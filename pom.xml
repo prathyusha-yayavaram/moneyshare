@@ -82,7 +82,6 @@
 				<configuration>
 					<stage.enableJarSplitting>true</stage.enableJarSplitting>
 					<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
-					<cloudSdkPath>/Users/300073795/Documents/Environment/google-cloud-sdk</cloudSdkPath>
 				</configuration>
 			</plugin>
 		</plugins>
