@@ -1,4 +1,4 @@
-runtime: java
+runtime: custom
 env: flex
 
 runtime_config:
@@ -11,6 +11,10 @@ handlers:
     redirect_http_response_code: 301
 manual_scaling:
   instances: 1
+
+network:
+  forwarded_ports:
+    - 8445/tcp
 
 resources:
   cpu: 2
