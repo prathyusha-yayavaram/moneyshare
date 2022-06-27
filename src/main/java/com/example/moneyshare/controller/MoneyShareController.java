@@ -1,13 +1,14 @@
 package com.example.moneyshare.controller;
 
-import com.example.moneyshare.domain.User;
+import com.example.moneyshare.api.request.LentRequest;
+import com.example.moneyshare.api.response.LentResponse;
+import com.example.moneyshare.api.response.WalletResponse;
+import com.example.moneyshare.entity.User;
+import com.example.moneyshare.service.LentService;
 import com.example.moneyshare.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @RestController
@@ -17,46 +18,31 @@ public class MoneyShareController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LentService lentService;
+
+    @GetMapping(path = "/healthCheck")
+    public String checkHealth() {
+        return "OK\n";
+    }
+
     @GetMapping(path = "/isNewUser")
-    public Boolean isNewUser(@RequestParam String id) throws ExecutionException, InterruptedException {
+    public Boolean isNewUser(@RequestParam String id) {
         return userService.isNewUser(id);
     }
 
     @PostMapping(path = "/saveUser", consumes = "application/json", produces = "application/json")
-    public String saveUserDetails(@RequestBody User user) throws ExecutionException, InterruptedException {
+    public String saveUserDetails(@RequestBody User user) {
         return userService.saveUserDetails(user);
     }
 
-    @GetMapping(path = "/healthCheck")
-    public String checkHealth(@RequestBody User user) {
-        return "OK\n";
+    @GetMapping(path = "/getWalletAmount")
+    public WalletResponse getWalletAmount(@RequestParam String id) {
+        return userService.getWalletAmount(id);
     }
-  /*  private Boolean flag = true;
-    @PostMapping(path = "/putUserData", consumes = "application/json", produces = "application/json")
-    public Response addEmployee(@RequestBody Request request) {
-        log.info("Coupon generated for user " + request.getBulkUsers() + " using the ruleId " + request.getRuleId());
-        Response response = new Response();
-        CouponDetails couponDetails = new CouponDetails();
-        if(flag) {
-            couponDetails.setCoupon("MYNPECCHITRUE500");
-            flag = false;
-        }
-        else {
-            couponDetails.setCoupon("MYNPECCHIFALSE500");
-            flag = true;
-        }
-        couponDetails.setExpiryDate(1609281026L);
-        couponDetails.setConditionMin(1499.0);
-        couponDetails.setConditionMax(0.0);
-        couponDetails.setCouponAmount(0.0);
-        couponDetails.setCouponPercentage(15.0);
-        couponDetails.setStatus("A");
-        couponDetails.setCouponType("percentage");
-        couponDetails.setDescription("15% off on minimum purchase of Rs. 1499.0");
-        couponDetails.setApplicable(false);
-        Map<String, CouponDetails> data = new HashMap<>();
-        String uidx = request.getBulkUsers() != null ? request.getBulkUsers() : "TEST";
-        data.put(uidx, couponDetails);
-        response.setData(data);
-        return response;*/
+
+    @PostMapping(path = "/lentRequest")
+    public LentResponse getLentRecords(@RequestParam String id) {
+        return lentService.getLentRecords(id);
+    }
 }

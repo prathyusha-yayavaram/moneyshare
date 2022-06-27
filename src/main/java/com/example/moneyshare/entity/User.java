@@ -1,7 +1,6 @@
-package com.example.moneyshare.domain;
+package com.example.moneyshare.entity;
 
 import com.google.cloud.firestore.annotation.DocumentId;
-import com.google.cloud.firestore.annotation.PropertyName;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.cloud.gcp.data.firestore.Document;
@@ -18,6 +17,12 @@ public class User {
 
     private String ssn;
 
-    private String walletAmount;
+    private String creditScore;
+
+    private Long walletAmount;
+
+    private Long lentAmount;
+
+    private Long borrowAmount;
 
 }
