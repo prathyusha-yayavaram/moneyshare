@@ -7,14 +7,8 @@ runtime_config:
 handlers:
   - url: /.*
     script: this field is required, but ignored
-    secure: always
-    redirect_http_response_code: 301
 manual_scaling:
   instances: 1
-
-network:
-  forwarded_ports:
-    - 8445/tcp
 
 resources:
   cpu: 2
