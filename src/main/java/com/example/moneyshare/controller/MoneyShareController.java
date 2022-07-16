@@ -3,6 +3,7 @@ package com.example.moneyshare.controller;
 import com.example.moneyshare.api.request.AcceptLendRequest;
 import com.example.moneyshare.api.request.BorrowRequest;
 import com.example.moneyshare.api.request.LendRequest;
+import com.example.moneyshare.api.response.IsNewUser;
 import com.example.moneyshare.api.response.LentResponse;
 import com.example.moneyshare.api.response.WalletResponse;
 import com.example.moneyshare.entity.BorrowDetails;
@@ -37,7 +38,7 @@ public class MoneyShareController {
     }
 
     @GetMapping(path = "/isNewUser")
-    public Boolean isNewUser(@RequestParam String id) {
+    public IsNewUser isNewUser(@RequestParam String id) {
         return userService.isNewUser(id);
     }
 

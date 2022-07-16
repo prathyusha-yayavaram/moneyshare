@@ -1,5 +1,6 @@
 package com.example.moneyshare.service;
 
+import com.example.moneyshare.api.response.IsNewUser;
 import com.example.moneyshare.api.response.WalletResponse;
 import com.example.moneyshare.entity.User;
 import com.example.moneyshare.repository.UserRepository;
@@ -37,8 +38,10 @@ public class UserService {
 
     //addmoney
 
-    public Boolean isNewUser(String id) {
+    public IsNewUser isNewUser(String id) {
         Optional<User> user = userRepository.get(id);
-        return user.isPresent();
+        IsNewUser isNewUser = new IsNewUser();
+        isNewUser.setIsNewUser(user.isPresent());
+        return isNewUser;
     }
 }
