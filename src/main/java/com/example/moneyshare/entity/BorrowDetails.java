@@ -15,10 +15,10 @@ public class BorrowDetails {
     private String id;
 
     private String userId;
-    private String amount;
-    private String creditScore;
-    private String roi;
-
+    private Long amount;
+    private Double creditScore;
+    private Double roi;
     private BorrowStatus status;
+    private String lentId;
 
 }

@@ -19,10 +19,9 @@ public class LentDetails {
     private String id;
 
     private String userId;
-    private String creditScore;
-    private String amount;
-    private String roi;
+    private Double creditScore;
+    private Long amount;
+    private Double roi;
     private LentStatus status;
-    private List<String> borrowLists;
-
+    private List<BorrowDetails> borrowLists;
 }

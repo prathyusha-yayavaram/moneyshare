@@ -3,6 +3,7 @@ package com.example.moneyshare.entity;
 import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 import org.springframework.cloud.gcp.data.firestore.Document;
 
 @Document(collectionName = "usersCollection")
