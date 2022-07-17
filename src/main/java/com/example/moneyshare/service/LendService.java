@@ -70,7 +70,7 @@ public class LendService {
         BorrowDetails borrowDetails = new BorrowDetails();
         borrowDetails.setAmount(request.getAmount());
         borrowDetails.setUserId(request.getUserId());
-        User user = userRepository.retrieveAll().stream().filter(x -> request.getUserId().equals(x.getId())).findFirst().get();
+        User user = userRepository.get(request.getUserId()).get();
         borrowDetails.setCreditScore(user.getCreditScore());
         borrowDetails.setRoi(request.getRoi());
         borrowDetails.setStatus(BorrowStatus.PENDING);

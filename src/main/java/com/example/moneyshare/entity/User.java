@@ -1,5 +1,6 @@
 package com.example.moneyshare.entity;
 
+import com.example.moneyshare.firebase.DocumentId;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.cloud.gcp.data.firestore.Document;
@@ -9,6 +10,7 @@ import org.springframework.cloud.gcp.data.firestore.Document;
 @Setter
 public class User {
 
+    @DocumentId
     private String id;
 
     private String name;

@@ -33,7 +33,7 @@ public class UserService {
 
     public WalletResponse getWalletAmount(String id) {
         WalletResponse response = new WalletResponse();
-        User user = userRepository.retrieveAll().stream().filter(x -> id.equals(x.getId())).findFirst().get();
+        User user = userRepository.get(id).get();
         response.setTotalAmount(user.getWalletAmount());
         response.setLentAmount(user.getLentAmount());
         response.setBorrowedAmount(user.getBorrowAmount());
@@ -43,7 +43,7 @@ public class UserService {
     //addmoney
 
     public IsNewUser isNewUser(String id) {
-        Optional<User> user = userRepository.retrieveAll().stream().filter(x -> id.equals(x.getId())).findFirst();
+        Optional<User> user = userRepository.get(id);
         IsNewUser isNewUser = new IsNewUser();
         isNewUser.setIsNewUser(!user.isPresent());
         return isNewUser;
@@ -51,7 +51,7 @@ public class UserService {
 
     public Response addMoney(AddMoney addMoney) {
         String id = addMoney.getId();
-        User user = userRepository.retrieveAll().stream().filter(x -> id.equals(x.getId())).findFirst().get();
+        User user = userRepository.get(id).get();
         Long existingAmount = user.getWalletAmount() == null ? 0 : user.getWalletAmount();
         user.setWalletAmount(existingAmount + addMoney.getAmount());
         userRepository.save(user);
