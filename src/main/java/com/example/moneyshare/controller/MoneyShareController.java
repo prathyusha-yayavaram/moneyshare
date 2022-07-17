@@ -1,11 +1,10 @@
 package com.example.moneyshare.controller;
 
 import com.example.moneyshare.api.request.AcceptLendRequest;
+import com.example.moneyshare.api.request.AddMoney;
 import com.example.moneyshare.api.request.BorrowRequest;
 import com.example.moneyshare.api.request.LendRequest;
-import com.example.moneyshare.api.response.IsNewUser;
-import com.example.moneyshare.api.response.Response;
-import com.example.moneyshare.api.response.WalletResponse;
+import com.example.moneyshare.api.response.*;
 import com.example.moneyshare.entity.BorrowDetails;
 import com.example.moneyshare.entity.LentDetails;
 import com.example.moneyshare.entity.User;
@@ -47,28 +46,33 @@ public class MoneyShareController {
         return userService.saveUserDetails(user);
     }
 
+    @PostMapping(path = "/addMoney", consumes = "application/json", produces = "application/json")
+    public Response addMoney(@RequestBody AddMoney addMoney) {
+        return userService.addMoney(addMoney);
+    }
+
     @GetMapping(path = "/getWalletAmount")
     public WalletResponse getWalletAmount(@RequestParam String id) {
         return userService.getWalletAmount(id);
     }
 
-    @PostMapping(path = "/addLentRequest", consumes = "application/json", produces = "application/json")
-    public String addLentRequest(@RequestBody LendRequest lentRequest) {
+    @PostMapping(path = "/addLendRequest", consumes = "application/json", produces = "application/json")
+    public Response addLentRequest(@RequestBody LendRequest lentRequest) {
         return lentService.addLentRequest(lentRequest);
     }
 
     @PostMapping(path = "/addBorrowRequest", consumes = "application/json", produces = "application/json")
-    public String addBorrowRequest(@RequestBody BorrowRequest borrowRequest) {
+    public Response addBorrowRequest(@RequestBody BorrowRequest borrowRequest) {
         return lentService.addBorrowRequest(borrowRequest);
     }
 
-    @PostMapping(path = "/getLentRequest")
-    public List<LentDetails> getLentRecords(@RequestParam String id) {
+    @GetMapping(path = "/getLentRequests")
+    public LentRequests getLentRecords(@RequestParam String id) {
         return lentService.getLentRecords(id);
     }
 
-    @PostMapping(path = "/getBorrowRequest")
-    public List<BorrowDetails> getBorrowRequest(@RequestParam String id) {
+    @GetMapping(path = "/getBorrowRequests")
+    public BorrowRequests getBorrowRequest(@RequestParam String id) {
         return lentService.getBorrowRecords(id);
     }
 

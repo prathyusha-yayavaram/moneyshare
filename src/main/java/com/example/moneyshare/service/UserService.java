@@ -1,5 +1,6 @@
 package com.example.moneyshare.service;
 
+import com.example.moneyshare.api.request.AddMoney;
 import com.example.moneyshare.api.response.IsNewUser;
 import com.example.moneyshare.api.response.Response;
 import com.example.moneyshare.api.response.WalletResponse;
@@ -32,7 +33,7 @@ public class UserService {
 
     public WalletResponse getWalletAmount(String id) {
         WalletResponse response = new WalletResponse();
-        User user = userRepository.get(id).get();
+        User user = userRepository.retrieveAll().stream().filter(x -> id.equals(x.getId())).findFirst().get();
         response.setTotalAmount(user.getWalletAmount());
         response.setLentAmount(user.getLentAmount());
         response.setBorrowedAmount(user.getBorrowAmount());
@@ -46,5 +47,15 @@ public class UserService {
         IsNewUser isNewUser = new IsNewUser();
         isNewUser.setIsNewUser(!user.isPresent());
         return isNewUser;
+    }
+
+    public Response addMoney(AddMoney addMoney) {
+        String id = addMoney.getId();
+        User user = userRepository.retrieveAll().stream().filter(x -> id.equals(x.getId())).findFirst().get();
+        user.setWalletAmount(user.getWalletAmount() + addMoney.getAmount());
+        userRepository.save(user);
+        Response response = new Response();
+        response.setMessage("OK");
+        return response;
     }
 }
