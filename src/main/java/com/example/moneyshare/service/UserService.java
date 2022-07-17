@@ -41,7 +41,7 @@ public class UserService {
     public IsNewUser isNewUser(String id) {
         Optional<User> user = userRepository.get(id);
         IsNewUser isNewUser = new IsNewUser();
-        isNewUser.setIsNewUser(user.isPresent());
+        isNewUser.setIsNewUser(!user.isPresent());
         return isNewUser;
     }
 }
