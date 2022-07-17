@@ -4,7 +4,7 @@ import com.example.moneyshare.api.request.AcceptLendRequest;
 import com.example.moneyshare.api.request.BorrowRequest;
 import com.example.moneyshare.api.request.LendRequest;
 import com.example.moneyshare.api.response.IsNewUser;
-import com.example.moneyshare.api.response.LentResponse;
+import com.example.moneyshare.api.response.Response;
 import com.example.moneyshare.api.response.WalletResponse;
 import com.example.moneyshare.entity.BorrowDetails;
 import com.example.moneyshare.entity.LentDetails;
@@ -43,7 +43,7 @@ public class MoneyShareController {
     }
 
     @PostMapping(path = "/saveUser", consumes = "application/json", produces = "application/json")
-    public String saveUserDetails(@RequestBody User user) {
+    public Response saveUserDetails(@RequestBody User user) {
         return userService.saveUserDetails(user);
     }
 

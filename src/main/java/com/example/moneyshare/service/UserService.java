@@ -1,6 +1,7 @@
 package com.example.moneyshare.service;
 
 import com.example.moneyshare.api.response.IsNewUser;
+import com.example.moneyshare.api.response.Response;
 import com.example.moneyshare.api.response.WalletResponse;
 import com.example.moneyshare.entity.User;
 import com.example.moneyshare.repository.UserRepository;
@@ -23,8 +24,10 @@ public class UserService {
     @Autowired
     public UserRepository userRepository;
 
-    public String saveUserDetails(User user) {
-        return userRepository.save(user).toString();
+    public Response saveUserDetails(User user) {
+        Response response = new Response();
+        response.setMessage(userRepository.save(user).toString());
+        return response;
     }
 
     public WalletResponse getWalletAmount(String id) {
@@ -39,7 +42,7 @@ public class UserService {
     //addmoney
 
     public IsNewUser isNewUser(String id) {
-        Optional<User> user = userRepository.get(id);
+        Optional<User> user = userRepository.retrieveAll().stream().filter(x -> id.equals(x.getId())).findFirst();
         IsNewUser isNewUser = new IsNewUser();
         isNewUser.setIsNewUser(!user.isPresent());
         return isNewUser;
