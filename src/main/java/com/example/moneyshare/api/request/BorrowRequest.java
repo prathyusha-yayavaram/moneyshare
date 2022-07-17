@@ -12,5 +12,5 @@ public class BorrowRequest {
     private String userId;
     private Long amount;
     private Double roi;
-    private Double minCreditScore;
+
 }

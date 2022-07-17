@@ -52,7 +52,8 @@ public class UserService {
     public Response addMoney(AddMoney addMoney) {
         String id = addMoney.getId();
         User user = userRepository.retrieveAll().stream().filter(x -> id.equals(x.getId())).findFirst().get();
-        user.setWalletAmount(user.getWalletAmount() + addMoney.getAmount());
+        Long existingAmount = user.getWalletAmount() == null ? 0 : user.getWalletAmount();
+        user.setWalletAmount(existingAmount + addMoney.getAmount());
         userRepository.save(user);
         Response response = new Response();
         response.setMessage("OK");

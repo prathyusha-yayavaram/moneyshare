@@ -15,7 +15,7 @@ public class User {
 
     private String ssn;
 
-    private String creditScore;
+    private Double creditScore;
 
     private Long walletAmount;
 
