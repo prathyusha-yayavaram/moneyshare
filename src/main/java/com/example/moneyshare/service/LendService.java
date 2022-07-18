@@ -37,7 +37,7 @@ public class LendService {
     public LentRequests getLentRecords(String userId) {
         List<LentDetails> lentDetailsList = lentDetailsRepository.retrieveAll().stream().filter(x -> userId.equals(x.getUserId())).collect(Collectors.toList());
         for (LentDetails lentDetails : lentDetailsList) {
-            List<BorrowDetails> borrowDetailsList = borrowDetailsRepository.retrieveAll().stream().filter(x -> x.getAmount() >= lentDetails.getAmount()
+            List<BorrowDetails> borrowDetailsList = borrowDetailsRepository.retrieveAll().stream().filter(x -> x.getAmount() == lentDetails.getAmount()
                     && x.getRoi() >= lentDetails.getRoi() && x.getCreditScore() >= lentDetails.getCreditScore() && BorrowStatus.PENDING.equals(x.getStatus())).collect(Collectors.toList());
             lentDetails.setBorrowLists(borrowDetailsList);
         }
@@ -61,6 +61,10 @@ public class LendService {
         lentDetails.setRoi(request.getRoi());
         lentDetails.setStatus(LentStatus.PENDING);
         lentDetailsRepository.save(lentDetails);
+        User user = userRepository.get(request.getUserId()).get();
+        user.setWalletAmount(user.getWalletAmount() - request.getAmount());
+        user.setLentAmount(user.getLentAmount() + request.getAmount());
+        userRepository.save(user);
         Response response = new Response();
         response.setMessage("OK");
         return response;
@@ -86,6 +90,9 @@ public class LendService {
         borrowDetails.setStatus(BorrowStatus.EXECUTED);
         borrowDetails.setLentId(lentDetails.getId());
         borrowDetailsRepository.save(borrowDetails);
+        User user = userRepository.get(borrowDetails.getUserId()).get();
+        user.setBorrowAmount(user.getBorrowAmount() + borrowDetails.getAmount());
+        userRepository.save(user);
         List<BorrowDetails> borrowDetailsList = new ArrayList<>();
         borrowDetailsList.add(borrowDetails);
         lentDetails.setBorrowLists(borrowDetailsList);
@@ -94,5 +101,21 @@ public class LendService {
         return "OK";
     }
 
+    public String settleBorrowRequest(String borrowId) {
+        BorrowDetails borrowDetails = borrowDetailsRepository.get(borrowId).get();
+        LentDetails lentDetails = lentDetailsRepository.get(borrowDetails.getLentId()).get();
+        borrowDetails.setStatus(BorrowStatus.COMPLETED);
+        borrowDetailsRepository.save(borrowDetails);
+        User user = userRepository.get(borrowDetails.getUserId()).get();
+        user.setBorrowAmount(user.getBorrowAmount() - borrowDetails.getAmount());
+        userRepository.save(user);
+        lentDetails.setStatus(LentStatus.COMPLETED);
+        lentDetailsRepository.save(lentDetails);
+        User lentUser = userRepository.get(lentDetails.getUserId()).get();
+        lentUser.setWalletAmount(lentUser.getWalletAmount() + borrowDetails.getAmount());
+        lentUser.setLentAmount(lentUser.getLentAmount() - borrowDetails.getAmount());
+        userRepository.save(user);
+        return "OK";
+    }
 
 }

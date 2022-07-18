@@ -5,8 +5,6 @@ import com.example.moneyshare.api.request.AddMoney;
 import com.example.moneyshare.api.request.BorrowRequest;
 import com.example.moneyshare.api.request.LendRequest;
 import com.example.moneyshare.api.response.*;
-import com.example.moneyshare.entity.BorrowDetails;
-import com.example.moneyshare.entity.LentDetails;
 import com.example.moneyshare.entity.User;
 import com.example.moneyshare.service.BorrowService;
 import com.example.moneyshare.service.LendService;
@@ -15,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -79,5 +76,10 @@ public class MoneyShareController {
     @PostMapping(path = "/acceptLentRequest", consumes = "application/json", produces = "application/json")
     public String acceptLentRequest(@RequestBody AcceptLendRequest acceptLendRequest) {
         return lentService.acceptLendRequest(acceptLendRequest.getLentId(), acceptLendRequest.getBorrowId());
+    }
+
+    @PostMapping(path = "/settleBorrowRequest", consumes = "application/json", produces = "application/json")
+    public String settleBorrowRequest(@RequestBody AcceptLendRequest acceptLendRequest) {
+        return lentService.settleBorrowRequest(acceptLendRequest.getBorrowId());
     }
 }
