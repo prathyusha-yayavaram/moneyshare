@@ -27,16 +27,17 @@ public class UserService {
 
     public Response saveUserDetails(User user) {
         Response response = new Response();
-        response.setMessage(userRepository.save(user).toString());
+        response.setMessage(userRepository.saveEncrypted(user).toString());
         return response;
     }
 
     public WalletResponse getWalletAmount(String id) {
         WalletResponse response = new WalletResponse();
-        User user = userRepository.get(id).get();
+        User user = userRepository.getDecrypted(id);
         response.setTotalAmount(user.getWalletAmount());
         response.setLentAmount(user.getLentAmount());
         response.setBorrowedAmount(user.getBorrowAmount());
+        response.setUser(user);
         return response;
     }
 
