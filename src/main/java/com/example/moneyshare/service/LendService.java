@@ -62,6 +62,12 @@ public class LendService {
         lentDetails.setStatus(LentStatus.PENDING);
         lentDetailsRepository.save(lentDetails);
         User user = userRepository.get(request.getUserId()).get();
+        if(user.getWalletAmount() == null) {
+            user.setWalletAmount(0);
+        }
+        if(user.getLentAmount() == null) {
+            user.setLentAmount(0);
+        }
         user.setWalletAmount(user.getWalletAmount() - request.getAmount());
         user.setLentAmount(user.getLentAmount() + request.getAmount());
         userRepository.save(user);
@@ -91,6 +97,9 @@ public class LendService {
         borrowDetails.setLentId(lentDetails.getId());
         borrowDetailsRepository.save(borrowDetails);
         User user = userRepository.get(borrowDetails.getUserId()).get();
+        if(user.getBorrowAmount() == null) {
+            user.setBorrowAmount(0);
+        }
         user.setBorrowAmount(user.getBorrowAmount() + borrowDetails.getAmount());
         userRepository.save(user);
         List<BorrowDetails> borrowDetailsList = new ArrayList<>();
@@ -107,11 +116,20 @@ public class LendService {
         borrowDetails.setStatus(BorrowStatus.COMPLETED);
         borrowDetailsRepository.save(borrowDetails);
         User user = userRepository.get(borrowDetails.getUserId()).get();
+        if(user.getBorrowAmount() == null) {
+            user.setBorrowAmount(0);
+        }
         user.setBorrowAmount(user.getBorrowAmount() - borrowDetails.getAmount());
         userRepository.save(user);
         lentDetails.setStatus(LentStatus.COMPLETED);
         lentDetailsRepository.save(lentDetails);
         User lentUser = userRepository.get(lentDetails.getUserId()).get();
+        if(user.getWalletAmount() == null) {
+            user.setWalletAmount(0);
+        }
+        if(user.getLentAmount() == null) {
+            user.setLentAmount(0);
+        }
         lentUser.setWalletAmount(lentUser.getWalletAmount() + borrowDetails.getAmount());
         lentUser.setLentAmount(lentUser.getLentAmount() - borrowDetails.getAmount());
         userRepository.save(user);
