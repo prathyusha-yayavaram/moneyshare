@@ -25,13 +25,13 @@ public class UserService {
     @Autowired
     public UserRepository userRepository;
 
-    public Response saveUserDetails(User user) {
+    public Response saveUserDetails(User user) throws Exception {
         Response response = new Response();
         response.setMessage(userRepository.saveEncrypted(user).toString());
         return response;
     }
 
-    public WalletResponse getWalletAmount(String id) {
+    public WalletResponse getWalletAmount(String id) throws Exception {
         WalletResponse response = new WalletResponse();
         User user = userRepository.getDecrypted(id);
         response.setTotalAmount(user.getWalletAmount());

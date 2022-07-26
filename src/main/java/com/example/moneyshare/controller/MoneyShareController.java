@@ -39,7 +39,7 @@ public class MoneyShareController {
     }
 
     @PostMapping(path = "/saveUser", consumes = "application/json", produces = "application/json")
-    public Response saveUserDetails(@RequestBody User user) {
+    public Response saveUserDetails(@RequestBody User user) throws Exception {
         return userService.saveUserDetails(user);
     }
 
@@ -49,7 +49,7 @@ public class MoneyShareController {
     }
 
     @GetMapping(path = "/getWalletAmount")
-    public WalletResponse getWalletAmount(@RequestParam String id) {
+    public WalletResponse getWalletAmount(@RequestParam String id) throws Exception {
         return userService.getWalletAmount(id);
     }
 
@@ -74,12 +74,12 @@ public class MoneyShareController {
     }
 
     @PostMapping(path = "/acceptLentRequest", consumes = "application/json", produces = "application/json")
-    public String acceptLentRequest(@RequestBody AcceptLendRequest acceptLendRequest) {
+    public Response acceptLentRequest(@RequestBody AcceptLendRequest acceptLendRequest) {
         return lentService.acceptLendRequest(acceptLendRequest.getLentId(), acceptLendRequest.getBorrowId());
     }
 
     @PostMapping(path = "/settleBorrowRequest", consumes = "application/json", produces = "application/json")
-    public String settleBorrowRequest(@RequestBody AcceptLendRequest acceptLendRequest) {
+    public Response settleBorrowRequest(@RequestBody AcceptLendRequest acceptLendRequest) {
         return lentService.settleBorrowRequest(acceptLendRequest.getBorrowId());
     }
 }

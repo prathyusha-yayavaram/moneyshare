@@ -1,6 +1,5 @@
 package com.example.moneyshare.repository;
 
-import com.example.moneyshare.encryption.Decrypter;
 import com.example.moneyshare.encryption.Encrypter;
 import com.example.moneyshare.entity.User;
 import com.example.moneyshare.firebase.AbstractFirestoreRepository;
@@ -16,17 +15,19 @@ public class UserRepository extends AbstractFirestoreRepository<User> {
         super(FirestoreClient.getFirestore(), "usersCollection");
     }
 
-    public User getDecrypted(String id) {
+    public User getDecrypted(String id) throws Exception {
         Optional<User> borrowDetailsOptional = get(id);
         User user = borrowDetailsOptional.get();
-        user.setName(Decrypter.decrypt(user.getName()));
-        user.setSsn(Decrypter.decrypt(user.getSsn()));
+        Encrypter encrypter = new Encrypter();
+        user.setName(encrypter.decrypt(user.getName()));
+        user.setSsn(encrypter.decrypt(user.getSsn()));
         return user;
     }
 
-    public Timestamp saveEncrypted(User user) {
-        user.setName(Encrypter.encrypt(user.getName()));
-        user.setSsn(Encrypter.encrypt(user.getSsn()));
+    public Timestamp saveEncrypted(User user) throws Exception {
+        Encrypter encrypter = new Encrypter();
+        user.setName(encrypter.encrypt(user.getName()));
+        user.setSsn(encrypter.encrypt(user.getSsn()));
         return save(user);
     }
 }
