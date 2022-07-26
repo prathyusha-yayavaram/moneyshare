@@ -63,10 +63,10 @@ public class LendService {
         lentDetailsRepository.save(lentDetails);
         User user = userRepository.get(request.getUserId()).get();
         if(user.getWalletAmount() == null) {
-            user.setWalletAmount(0);
+            user.setWalletAmount(0L);
         }
         if(user.getLentAmount() == null) {
-            user.setLentAmount(0);
+            user.setLentAmount(0L);
         }
         user.setWalletAmount(user.getWalletAmount() - request.getAmount());
         user.setLentAmount(user.getLentAmount() + request.getAmount());
@@ -98,7 +98,7 @@ public class LendService {
         borrowDetailsRepository.save(borrowDetails);
         User user = userRepository.get(borrowDetails.getUserId()).get();
         if(user.getBorrowAmount() == null) {
-            user.setBorrowAmount(0);
+            user.setBorrowAmount(0L);
         }
         user.setBorrowAmount(user.getBorrowAmount() + borrowDetails.getAmount());
         userRepository.save(user);
@@ -117,7 +117,7 @@ public class LendService {
         borrowDetailsRepository.save(borrowDetails);
         User user = userRepository.get(borrowDetails.getUserId()).get();
         if(user.getBorrowAmount() == null) {
-            user.setBorrowAmount(0);
+            user.setBorrowAmount(0L);
         }
         user.setBorrowAmount(user.getBorrowAmount() - borrowDetails.getAmount());
         userRepository.save(user);
@@ -125,10 +125,10 @@ public class LendService {
         lentDetailsRepository.save(lentDetails);
         User lentUser = userRepository.get(lentDetails.getUserId()).get();
         if(user.getWalletAmount() == null) {
-            user.setWalletAmount(0);
+            user.setWalletAmount(0L);
         }
         if(user.getLentAmount() == null) {
-            user.setLentAmount(0);
+            user.setLentAmount(0L);
         }
         lentUser.setWalletAmount(lentUser.getWalletAmount() + borrowDetails.getAmount());
         lentUser.setLentAmount(lentUser.getLentAmount() - borrowDetails.getAmount());
