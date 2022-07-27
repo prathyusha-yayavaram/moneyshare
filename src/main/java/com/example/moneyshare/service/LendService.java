@@ -104,6 +104,10 @@ public class LendService {
             user.setBorrowAmount(0L);
         }
         user.setBorrowAmount(user.getBorrowAmount() + borrowDetails.getAmount());
+        if(user.getWalletAmount() == null) {
+            user.setWalletAmount(0L);
+        }
+        user.setWalletAmount(user.getWalletAmount() + borrowDetails.getAmount());
         userRepository.save(user);
         List<BorrowDetails> borrowDetailsList = new ArrayList<>();
         borrowDetailsList.add(borrowDetails);
@@ -125,6 +129,10 @@ public class LendService {
             user.setBorrowAmount(0L);
         }
         user.setBorrowAmount(user.getBorrowAmount() - borrowDetails.getAmount());
+        if(user.getWalletAmount() == null) {
+            user.setWalletAmount(0L);
+        }
+        user.setWalletAmount(user.getWalletAmount() - borrowDetails.getAmount());
         userRepository.save(user);
         lentDetails.setStatus(LentStatus.COMPLETED);
         lentDetailsRepository.save(lentDetails);
